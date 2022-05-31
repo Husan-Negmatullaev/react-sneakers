@@ -30,12 +30,211 @@ li {
 
 }
 
+.button {
+  height: 55px;
+  background-color: #9DD558;
+  border-radius: 18px;
+  border: 0;
+  outline: 0;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #fff;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease 0s;
+  @media (any-hover: hover){
+    &:hover {
+      background-color: #87b353;
+      &.button__icon img {
+        transform: translateY(-50%) translateX(10px);
+      }
+    }
+  }
+  &__icon {
+    &_right {
+      img {
+        right: 33px;
+      }
+    }
+    position: relative;
+    img {
+      transition: transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
 .wrapper {
   background: #FFFFFF;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
   max-width: 1080px;
   margin: 50px auto;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 100%;
+    height: 100%;
+  }
+  &__body {
+    position: relative;
+    left: 0; // 385px
+    transition: left 0.3s ease 0s;
+    background-color: #fff;
+    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+    width: 420px;
+    height: 100%;
+    padding: 32px 30px;
+    display: flex;
+    flex-direction: column;
+  }
+  &__meta {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    img {
+      cursor: pointer;
+      width: 15px;
+      height: 15px;
+      @media (any-hover: hover){
+        &:hover{
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color:#000;
+  }
+  &__content {
+    flex: 1 1 auto;
+    overflow: auto;
+    margin: 0px -16px 0px 0px;
+    padding: 0px 5px 0px 0px;
+    
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: #fff;
+    }
+     
+    &::-webkit-scrollbar-thumb {
+      opacity: 0;
+    }
+
+    &:hover::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 20px;
+      opacity: 1;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555; 
+    }
+  }
+  &__footer {
+    margin-top: 10px;
+    &-list {
+      li {
+        display: flex;
+        align-items: center;
+        &:not(:last-child) {margin-bottom: 20px;}
+        div {
+          align-self: flex-end;
+          margin: 0px 5px 4px 5px;
+          flex: 1 1 auto;
+          border-bottom: 1px dashed #DFDFDF;
+        }
+      }
+    }
+    &-var {
+      font-size: 16px;
+      line-height: 19px;
+      color: #000000;
+    }
+    &-value {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 19px;
+      color: #000000;
+    }
+    &-button {
+      margin: 25px 0px 0px 0px;
+    }
+  }
+}
+
+.drawer-cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 20px;
+  border: 1px solid #F3F3F3;
+  border-radius: 20px;
+  &:not(:last-child) {margin-bottom: 20px;}
+  overflow: hidden;
+  &__image {
+    width: 70px;
+    height: 70px;
+    display: inline-flex;
+    align-items: center;
+    margin: 0px 20px 0px 0px;
+    img {
+      max-width: 100%;
+    }
+  }
+  &__content {
+    margin: 0px 12px 0px 0px;
+  }
+  &__title {
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 8px;
+  }
+  &__price {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+  }
+  &__button {
+    background-color: #fff;
+    border: 1px solid #DBDBDB;
+    border-radius: 8px;
+    flex: 0 0 32px;
+    height: 31px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    @media (any-hover: hover){
+      &:hover{
+        border-color: #ffffff;
+        background-color: #89F09C;
+        svg path {
+          fill: #fff;
+        }
+      }
+    }
+  }
 }
 
 .header {
@@ -125,7 +324,16 @@ li {
 
 .sneakers {
   &__title {
+    
+  }
+  &__actions {
     margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__form {
+
   }
   &__card {
     
@@ -134,6 +342,29 @@ li {
     display: flex;
     margin: 0px -20px;
     flex-wrap: wrap;
+  }
+}
+
+.form-search {
+  display: flex;
+  align-items: center;
+  padding: 0px 18px;
+  border: 1px solid #F3F3F3;
+  border-radius: 10px;
+  &__icon {
+    cursor: pointer;
+  }
+  &__input {
+    &::placeholder {
+      color: #C4C4C4;
+    }
+    height: 45px;
+    border: 0;
+    margin: 0px 0px 0px 13px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000;
   }
 }
 
@@ -148,6 +379,15 @@ li {
   flex-direction: column;
   align-items: center;
   margin: 0px 20px 30px;
+  position: relative;
+  transition: all 0.3s ease 0s;
+
+  @media (any-hover: hover){
+    &:hover{
+      box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.05);
+      transform: translateY(-10px);
+    }
+  }
   &__img {
     width: 135px;
     margin-bottom: 15px;
@@ -156,10 +396,44 @@ li {
     }
   }
   &__actions {
-
+    position: absolute;
+    top: 20px;
+    left: 30px;
   }
-  &__favourite {
+  &__icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #F8F8F8;
+    border-radius: 7px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    &:not(:last-child) {margin-right: 10px;}
+    svg path {
+      fill: #ECECEC;
+      transition: all 0.3s ease 0s;
+    }
 
+    &_favorite {
+      &.active {
+        background-color: #FEF0F0;
+        border: 0;
+        svg path {
+          fill: red;
+        }
+      }
+      @media (any-hover: hover){
+        &:hover{
+          svg path {
+            fill: #FF8585;
+          }
+        }
+      }
+    }
   }
   &__title {
     font-size: 14px;
@@ -190,6 +464,7 @@ li {
     color:#000;
   }
   &__button {
+    background-color: #fff;
     flex: 0 0 32px;
     height: 32px;
     border: 1px solid #F2F2F2;
@@ -209,5 +484,14 @@ li {
         }
       }
     }
+  }
+}
+
+.name {
+  &__container {
+    
+  }
+  &__content {
+
   }
 }
