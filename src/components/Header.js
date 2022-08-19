@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Header() {
+export default function Header(props) {
     return (
         <header className="header">
             <a href="#" className="header__logo">
@@ -12,7 +12,7 @@ export default function Header() {
             </a>
             <div className="header__menu menu">
                 <ul className="menu__list">
-                    <li>
+                    <li onClick={props.onClickCart}>
                         <img className="menu__icon" src="/img/cart.svg" alt="" />
                         <span className="menu__text">1205 руб.</span>
                     </li>

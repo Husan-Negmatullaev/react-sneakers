@@ -1,43 +1,63 @@
+import React from "react";
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 
 function App() {
-  const data = [
-    {
-      image: '/img/sneakers/01.jpg',
-      favorite: true,
-      title: 'Мужские Кроссовки Nike Blazer Mid Suede',
-      price: 12999,
-    },
-    {
-      image: '/img/sneakers/02.jpg',
-      favorite: false,
-      title: 'Мужские Кроссовки Nike Air Max 270',
-      price: 15699,
-    },
-    {
-      image: '/img/sneakers/03.jpg',
-      favorite: false,
-      title: 'Мужские Кроссовки Nike Blazer Mid Suede',
-      price: 12999,
-    },
-    {
-      image: '/img/sneakers/04.jpg',
-      favorite: true,
-      title: 'Кроссовки Puma X Aka Boku Future Rider',
-      price: 8999,
-    },
-  ]
+  const _apiUrl = "https://62fcf1686e617f88dea1b194.mockapi.io/products";
+
+  const [products, setProducts] = React.useState([]);
+  const [cartProducts, setCartProducts] = React.useState([]);
+  const [isShowDrawer, setShowDrawer] = React.useState(false);
+
+  React.useEffect(() => {
+    fetch(_apiUrl)
+      .then(response => response.json())
+      .then(data => setProducts(data));
+  }, [])
+
+  const onAddToCart = (obj) => {
+    setCartProducts(prev => {
+      const removeRepeated = [...prev, obj].filter(item => obj.isAdded || item.id !== obj.id);
+
+      return [...removeRepeated];
+    })
+  }
+
+  const onRemoveCartProduct = (id, productCarts) => {
+    const addedCartId = productCarts.findIndex(el => el.id === id);
+    setCartProducts(() => {
+      const before = productCarts.slice(0, addedCartId);
+      const after = productCarts.slice(addedCartId + 1);
+
+      return [...before, ...after];
+    });
+
+    setProducts((prev) => {
+      const addedProductId = prev.findIndex(el => el.id === addedCartId);
+      const oldProduct = prev[addedProductId];
+      const newProduct = {...oldProduct, isAdded: false};
+      
+      console.log(
+        ...prev.slice(0, addedProductId),
+        newProduct,
+        ...prev.slice(addedProductId + 1)
+      );
+
+      return [
+        ...prev
+      ]
+    })
+  }
 
   return (
     <div className="wrapper">
-      <Drawer />
-      <Header />
+      {isShowDrawer && <Drawer onRemoveCart={onRemoveCartProduct} products={cartProducts} onClose={() => setShowDrawer(false)} />}
+      <Header onClickCart={() => setShowDrawer(true)} />
       <main className="page">
-        <div className="page__sneakers sneakers">
+        <section className="page__sneakers sneakers">
           <div className="sneakers__actions">
-            <h1 className="title sneakers__title">Кроссовки</h1>
+            <h1 className="title sneakers__title">Все кроссовки</h1>
             <div className="sneakers__form form-search">
               <img
                 src="/img/magnifer.svg"
@@ -53,19 +73,21 @@ function App() {
           </div>
           <div className="sneakers__body"> 
             {
-              data.map((obj, index) => (
+              products.map((product, index) => (
                 <Card 
-                  title={obj.title}
-                  price={obj.price}
-                  image={obj.image}
-                  favorite={obj.favorite}
-                  onClick={() => console.log(obj)}
+                  title={product.title}
+                  price={product.price}
+                  image={product.image}
+                  id={product.id}
+                  isAdded={product.isAdded}
+                  onFavorite={() => console.log('Добавили в корзину')}
+                  onClickAdd={(obj) => onAddToCart(obj)}
                   key={index}
                 />
               ))
             }
           </div>
-        </div>
+        </section>
       </main>
     </div>
   );

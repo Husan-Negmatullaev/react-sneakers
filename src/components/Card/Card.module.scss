@@ -123,12 +123,19 @@
 
     @media (any-hover: hover) {
       &:hover {
-        border-color: #ffffff;
         background-color: #89F09C;
 
         svg path {
           fill: #ffffff;
         }
+      }
+    }
+    &_active {
+      border-color: transparent;
+      background-color: #89F09C;
+      box-shadow: 0 0 10px 5px rgba(137, 240, 156, 0.5);
+      svg path {
+        fill: #ffffff;
       }
     }
   }
